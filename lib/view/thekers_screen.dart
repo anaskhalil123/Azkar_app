@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:second_copy_for_azkar_application/controller/theker_controller.dart';
 import 'package:second_copy_for_azkar_application/model/hive_card.dart';
 import 'package:second_copy_for_azkar_application/model/theker.dart';
 import 'package:second_copy_for_azkar_application/model/theker_number.dart';
@@ -8,31 +9,6 @@ import 'package:second_copy_for_azkar_application/view/home_screen.dart';
 import 'package:second_copy_for_azkar_application/view/widgets/theker_widget.dart';
 
 class ThekersScreen extends StatelessWidget {
-  // List<Theker> thekers = [
-  //   Theker(
-  //     theker_text: 'بسم الله الرحمن الرحيم',
-  //     theker_number: 10,
-  //     theker_guide: 'عن النبي صلى الله عليه وسلم',
-  //     theker_reward: 'بسم الله الرحمن الرحيم',
-  //     theker_header: 'أذكار المساء',
-  //   ),
-  //   Theker(
-  //     theker_text:
-  //         ' بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم بسم الله الرحمن الرحيم , بسم الله الرحمن الرحيم',
-  //     theker_number: 10,
-  //     theker_guide: 'عن النبي صلى الله عليه وسلم',
-  //     theker_reward: 'بسم الله الرحمن الرحيم',
-  //     theker_header: 'أذكار الصباح',
-  //   ),
-  //   Theker(
-  //     theker_text: 'بسم الله الرحمن الرحيم',
-  //     theker_number: 10,
-  //     theker_guide: 'عن النبي صلى الله عليه وسلم',
-  //     theker_reward: 'بسم الله الرحمن الرحيم',
-  //     theker_header: 'أذكار المساء',
-  //   )
-  // ];
-
   @override
   Widget build(BuildContext context) {
     // get arguments from the previous screen
@@ -41,18 +17,28 @@ class ThekersScreen extends StatelessWidget {
     //get thekers based for the thekerHeader
     List<Theker> thekers = getThekers(thekerHeader);
 
+    // thekers_numbers list
+    List<ThekerNumber> thekersNumbers = [];
     // add theker numbers to static list
     int index = 0;
     for (var theker in thekers) {
-      Constants.thekerNumbers.add(
+      thekersNumbers.add(
         ThekerNumber(number: theker.theker_number, id: index),
       );
+      print(
+          'ThekersScreen: thekers numbers from static for index $index  is ${thekersNumbers[index].number}');
       index++;
     }
+    // get controller
+    final ThekerController thekerController = Get.put(
+      ThekerController(thekers_num: thekersNumbers),
+    );
 
     return WillPopScope(
       onWillPop: () async {
-        Constants.thekerNumbers = [];
+        // Constants.thekerNumbers = [];
+        // print(
+        //     'ThekersScreen: after back thekers list ${Constants.thekerNumbers}');
         return true;
       },
       child: Scaffold(
@@ -76,6 +62,9 @@ class ThekersScreen extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
+                // Constants.thekerNumbers = [];
+                // print(
+                //     'ThekersScreen: after back thekers list ${Constants.thekerNumbers}');
                 Get.offAll(HomeScreen());
               },
             )
@@ -99,14 +88,20 @@ class ThekersScreen extends StatelessWidget {
               ),
             ),
           ),
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              return ThekerWidget(
-                  theker: thekers[index],
-                  thekerChangedNumber: Constants.thekerNumbers[index].number,
-                  index: index);
+          child: GetBuilder<ThekerController>(
+            builder: (controller) {
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  return ThekerWidget(
+                    theker: thekers[index],
+                    thekerChangedNumber:
+                        controller.theker_numbers[index].number,
+                    index: index,
+                  );
+                },
+                itemCount: controller.theker_numbers.length,
+              );
             },
-            itemCount: thekers.length,
           ),
         ),
       ),

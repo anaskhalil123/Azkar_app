@@ -20,9 +20,8 @@ class ThekerWidget extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    ThekerController thekerController =
-        ThekerController(theker_number: thekerChangedNumber);
-
+    var thekerController = Get.find<ThekerController>();
+    
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
       child: Container(
@@ -41,7 +40,7 @@ class ThekerWidget extends StatelessWidget {
                   textDirection: TextDirection.rtl,
                   theker.theker_text,
                   style: TextStyle(
-                    fontSize: width / 25,
+                    fontSize: width / 23.5,
                     fontFamily: 'alfont_com_SakkalKitab',
                     color: Theme.of(context).textTheme.bodyMedium!.color,
                   ),
@@ -54,7 +53,7 @@ class ThekerWidget extends StatelessWidget {
                   textDirection: TextDirection.rtl,
                   theker.theker_reward,
                   style: TextStyle(
-                    fontSize: width / 35,
+                    fontSize: width / 30,
                     color: Theme.of(context).textTheme.bodyMedium!.color,
                   ),
                 ),
@@ -76,18 +75,17 @@ class ThekerWidget extends StatelessWidget {
                       onPressed: () {
                         // reset theker number here....
                         thekerController
-                            .resetThekerNumber(theker.theker_number);
-                        Constants.thekerNumbers[index].number =
-                            theker.theker_number;
+                            .resetThekerNumber(index, theker.theker_number);
+                        // Constants.thekerNumbers[index].number =
+                            // theker.theker_number;
                       },
                     ),
                   ),
                   Expanded(
                     flex: 4,
-                    child: Obx(
-                      () => ElevatedButton(
+                    child: ElevatedButton(
                         child: Text(
-                          '${thekerController.theker_number}',
+                          '${thekerController.theker_numbers[index].number}',
                           style: TextStyle(
                               color:
                                   Theme.of(context).textTheme.bodyMedium!.color,
@@ -102,11 +100,11 @@ class ThekerWidget extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Constants.thekerNumbers[index].number--;
-                          thekerController.decreaseThekerNumber();
+                          // Constants.thekerNumbers[index].number--;
+                          print('ThekerWidget, decrease index ${index}');
+                          thekerController.decreaseThekerNumber(index);
                         },
                       ),
-                    ),
                   ),
                   Expanded(
                     flex: 1,

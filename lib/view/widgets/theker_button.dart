@@ -27,7 +27,7 @@ class ThekeButton extends StatelessWidget {
       child: Text(
         thekerHeader.text,
         style: TextStyle(
-            fontSize: width / 20,
+            fontSize: width / 16,
             fontFamily: 'alfont_com_SakkalKitab',
             color: Theme.of(context).textTheme.titleSmall!.color),
       ),

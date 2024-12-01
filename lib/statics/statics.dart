@@ -5,7 +5,7 @@ class Constants {
   static const main_color = Color(0xff9dbf2e);
   static const gray = const Color.fromARGB(255, 211, 211, 211);
 
-  static List<ThekerNumber> thekerNumbers = [];
+  // static List<ThekerNumber> thekerNumbers = [];
 
   static ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: Constants.main_color,

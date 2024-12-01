@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_copy_for_azkar_application/controller/theme_controller.dart';
 import 'package:second_copy_for_azkar_application/view/home_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   final ThemeController themeController = Get.find();
@@ -46,6 +47,17 @@ class SettingsScreen extends StatelessWidget {
         child: ListView(
           children: [
             ListTile(
+              onTap: () async {
+                print('Here go to whatsapp');
+                String phoneNumber = '972599634785';
+                String message = ' السلام عليكم';
+                final String whatsappUrl = "https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}";
+                if (await canLaunch(whatsappUrl)) {
+                await launch(whatsappUrl); //Launch WhatsApp
+                } else {
+                  throw 'Could not launch WhatsApp';
+                }
+              },
               title: Text('تواصل معنا',
                   textAlign: TextAlign.right,
                   style: TextStyle(

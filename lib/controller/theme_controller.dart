@@ -17,7 +17,6 @@ class ThemeController extends GetxController {
     // change theme as it from the Storage
     // Get.changeTheme(isDarkMode? Constants.darkTheme : Constants.lightTheme);
   }
-
   ThemeMode getSavedMode() {
     if (box.read('isDarkTheme') == null) {
       print('return system mode');

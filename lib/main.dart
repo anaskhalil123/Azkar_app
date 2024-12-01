@@ -13,7 +13,6 @@ import 'package:second_copy_for_azkar_application/view/taspeeh_screen.dart';
 import 'package:second_copy_for_azkar_application/view/thekers_screen.dart';
 
 void main() async {
-  // Get.put(ThemeController());
   await Hive.initFlutter(); // Initialize Hive
   await GetStorage.init(); // Initialize GetStorage
   Hive.registerAdapter(ThekerAdapter());
@@ -35,14 +34,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   final ThemeController themeController = Get.put<ThemeController>(ThemeController());
-
+  precacheImage(AssetImage('assests/splach_background.jpg'), context);
+  
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'أذكار الصباح والمساء',
       initialRoute: '/',
       theme: Constants.lightTheme,
       darkTheme: Constants.darkTheme,
-      themeMode: themeController.getSavedMode(),
+      themeMode: themeController.
+      getSavedMode(),
       getPages: [
         GetPage(name: '/', page: () => HomeScreen()),
         GetPage(name: '/thekers', page: () => ThekersScreen()),

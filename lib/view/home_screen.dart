@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
             image: DecorationImage(
               image: Get.isDarkMode
                   ? AssetImage(
-                      'assests/splach_background_dark.png',
+                      'assests/splach_background_dark.jpg',
                     )
                   : AssetImage(
                       'assests/splach_background.jpg',
